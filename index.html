@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Nacional Estandarizada Sumativa - Estudios Sociales</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --secondary: #2b6cb0;
+            --accent: #3182ce;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --success: #38a169;
+            --error: #e53e3e;
+            --warning: #d69e2e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Login Screen */
+        #login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 450px;
+            border-top: 5px solid var(--primary);
+        }
+
+        .login-card h2 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .alert-error {
+            background-color: #fed7d7;
+            color: #9b2c2c;
+            border: 1px solid #feb2b2;
+        }
+
+        /* App Main Screen */
+        #app-screen {
+            display: none;
+        }
+
+        .admin-header {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--accent);
+        }
+
+        .admin-header h1 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .admin-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .timer-badge {
+            background: var(--warning);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        /* Question Card Styles */
+        .question-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .quote-box {
+            background: #f1f5f9;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin-bottom: 15px;
+            font-style: italic;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .option-label:hover {
+            background: #f8fafc;
+            border-color: var(--accent);
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            margin-top: 4px;
+        }
+
+        /* Navigation Matrix / Sidebar or Header Floating Menu */
+        .floating-nav {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .modal-matrix {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .matrix-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+
+        .matrix-btn {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #edf2f7;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .matrix-btn.answered {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        /* Results & Feedback */
+        .feedback-correct {
+            border-color: var(--success) !important;
+            background-color: #f0fff4 !important;
+        }
+
+        .feedback-incorrect {
+            border-color: var(--error) !important;
+            background-color: #fff5f5 !important;
+        }
+
+        .result-banner {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .result-banner h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .result-card-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .result-card-item span {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .question-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- PANTALLA DE LOGIN -->
+        <div id="login-screen">
+            <div class="login-card">
+                <h2>Prueba Nacional Estandarizada<br><small style="font-size: 0.8rem; color: #666;">Estudios Sociales - Secundaria</small></h2>
+                <div id="login-error" class="alert alert-error" style="display: none;"></div>
+                <form id="form-login">
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" class="form-control" required placeholder="estudiante@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" class="form-control" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn">Ingresar a la Prueba</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE LA APLICACIÓN / EXAMEN -->
+        <div id="app-screen">
+            <div class="admin-header">
+                <h1>Ministerio de Educación Pública | Dirección de Gestión y Evaluación de la Calidad</h1>
+                <p><strong>Colegio:</strong> Institución de Educación Secundaria | <strong>Componente:</strong> Estudios Sociales (Sumativa 2024)</p>
+                <div class="admin-info-grid">
+                    <div><strong>Estudiante:</strong> <span id="lbl-nombre"></span></div>
+                    <div><strong>Correo:</strong> <span id="lbl-correo"></span></div>
+                    <div><strong>Intento:</strong> <span id="lbl-intento"></span></div>
+                    <div><strong>Valor Total:</strong> 70% (35 Puntos)</div>
+                    <div><strong>Tiempo Restante:</strong> <span id="timer" class="timer-badge">02:00:00</span></div>
+                </div>
+            </div>
+
+            <div id="results-container"></div>
+            
+            <form id="exam-form">
+                <div id="questions-container">
+                    <!-- Las 35 preguntas se cargan de forma dinámica y rigurosa -->
+                </div>
+                <div style="text-align: center; margin: 40px 0;" class="no-print">
+                    <button type="button" id="btn-submit" class="btn" style="max-width: 300px; font-size: 1.1rem; background-color: var(--success);">Finalizar y Entregar Prueba</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MATRIZ DE NAVEGACIÓN RÁPIDA -->
+    <div class="floating-nav no-print" onclick="toggleMatrix()">
+        <span>📍 Navegador Ítems</span>
+    </div>
+
+    <div id="matrix-modal" class="modal-matrix">
+        <div class="matrix-content">
+            <h3>Matriz de Navegación de Ítems</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">Haga clic en cualquier ítem para saltar a él. Los respondidos se marcarán en verde.</p>
+            <div id="matrix-grid" class="matrix-grid"></div>
+            <button class="btn" onclick="toggleMatrix()" style="margin-top: 15px;">Cerrar Matriz</button>
+        </div>
+    </div>
+
+    <script>
+        // LISTA OFICIAL DE ESTUDIANTES Y CREDENCIALES
+        const USERS_DB = [
+            { email: "cascante535@gmail.com", pass: "Casa1234", name: "Cascante Estudiante" },
+            { email: "valeriahernandezcascante@gmail.com", pass: "Casa1234", name: "Valeria Hernández Cascante" },
+            { email: "jerichacolomer@gmail.com", pass: "Casa1234", name: "Jericha Colomer" },
+            { email: "rousvillalobos0@gmail.com", pass: "Casa1234", name: "Rous Villalobos" },
+            { email: "rey200578@gmail.com", pass: "Casa1234", name: "Rey Estudiante" },
+            { email: "justinbonillaaguirre054@gmail.com", pass: "Casa1234", name: "Justin Bonilla Aguirre" },
+            { email: "arrietamaikol856@gmail.com", pass: "Casa1234", name: "Maikol Arrieta" },
+            { email: "soportecpt2025@gmail.com", pass: "Casa2781", name: "Soporte CPT" }
+        ];
+
+        // CONFIGURACIÓN DE URL DE GOOGLE APPS SCRIPT (Reemplazar con la URL publicada del Web App)
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz.../exec";
+
+        // BANCO DE PREGUNTAS OFICIALES (EXACTO Y LITERAL AL PDF - CERO ALUCINACIONES)
+        const EXAM_QUESTIONS = [
+            {
+                id: 1,
+                text: "Lea la siguiente información:",
+                quote: "Se estima que murieron entre 8,5 y 10 millones de militares durante la Primera Guerra Mundial. Hubo millones de desaparecidos o cuerpos que nunca se identificaron debido a la intensidad de los combates marcados por el uso de un nuevo armamento. Por otra parte, el gasto total a nivel militar, durante toda la guerra, ascendió a 208 500 millones de dólares (147 000 millones de la Triple Entente y 61 500 millones de los Imperios Centrales).<br><br>Tomado de: Ustyanowski, T. (2018).",
+                question: "De acuerdo con la información anterior, ¿cuál opción refiere una de las repercusiones socioeconómicas de la Primera Guerra Mundial?",
+                options: {
+                    A: "El deterioro de la infraestructura ocurrió en la totalidad de los territorios del continente europeo.",
+                    B: "El descenso de la población y el alto costo económico en que incurrieron los países contendientes.",
+                    C: "El financiamiento del conflicto bélico fue distribuido equitativamente entre los países que participaron en la contienda."
+                },
+                answer: "B"
+            },
+            {
+                id: 2,
+                text: "Lea el siguiente texto:",
+                quote: "Durante la Primera Guerra Mundial, ante la ausencia de hombres que fueron reclutados para el frente, las mujeres asumieron roles clave en la industria, la agricultura y los servicios públicos. Esta participación sostuvo la economía durante el conflicto y representó un avance importante hacia la igualdad de género, así como el reconocimiento de las capacidades femeninas en esferas tradicionalmente dominadas por hombres.<br><br>Tomado de: National Geographic. (2014).",
+                question: "Con base en el texto anterior, un impacto significativo de la participación de las mujeres en la Primera Guerra Mundial fue la",
+                options: {
+                    A: "consolidación de su rol tradicional de apoyo en el hogar.",
+                    B: "segregación y desigualdad que vivieron en los empleos al finalizar la guerra.",
+                    C: "integración de su fuerza laboral a la estructura productiva en diversos campos."
+                },
+                answer: "C"
+            },
+            {
+                id: 3,
+                text: "Lea el siguiente texto:",
+                quote: "La Revolución rusa tuvo múltiples causas, así por ejemplo; el régimen absoluto del Zar limitó severamente las libertades civiles y la participación en la desastrosa Primera Guerra Mundial, que contravenía la voluntad popular. Los altos costos del conflicto concentraron la riqueza en la nobleza y exacerbaron la pobreza entre la población. Asimismo, el descontento creciente y el influjo de ideas socialistas de igualdad motivaron a obreros y campesinos a manifestarse, con los cual se preparó el terreno para los eventos de 1917.<br><br>Tomado de: La Vanguardia. (2021).",
+                question: "Con base en el texto anterior, la Revolución rusa fue propiciada por",
+                options: {
+                    A: "aspectos externos ajenos al régimen zarista que motivaron un apoyo masivo de la población trabajadora y rural.",
+                    B: "un descontento masivo a causa de múltiples condiciones sociales, económicas y políticas.",
+                    C: "el deterioro político de Rusia a nivel internacional como consecuencia del socialismo."
+                },
+                answer: "B"
+            },
+            {
+                id: 4,
+                text: "Lea la siguiente información:",
+                quote: "Los hechos de octubre de 1917 tuvieron un alcance mundial. «La revolución rusa fue vista como el gran momento histórico de los pueblos de la periferia. Y en ellos ese gran momento no fue planteado según los lineamientos del marxismo como revoluciones proletarias. No podían serlo porque no había en ellos proletariado, pero tampoco querían serlo porque no querían reproducir modelos foráneos occidentales».<br><br>Tomado de: Fernández, A. (2017).",
+                question: "Según la información anterior, ¿cuál opción representa la influencia de la Revolución rusa en el escenario geopolítico mundial?",
+                options: {
+                    A: "El levantamiento del campesinado mexicano en 1910 en contra del gobierno dictatorial de Porfirio Díaz.",
+                    B: "Las revoluciones contra la corrupción política, la pobreza y el desempleo que ocurrieron durante ese periodo.",
+                    C: "El establecimiento de la República Popular China en 1949 tras la guerra civil entre los nacionalistas y la guerrilla dirigida por Mao Tse-Tung."
+                },
+                answer: "C"
+            },
+            {
+                id: 5,
+                text: "Lea el siguiente texto:",
+                quote: "La desocupación asoló, prioritariamente, a las regiones orientadas a la economía de exportación, es decir, el Valle Central y las llanuras caribeñas por lo que estas regiones fueron escenario de una significativa movilización social, especialmente en el año de 1934 cuando grandes movimientos huelguísticos como el de zapateros y el de los bananeros sacudieron al país. La crisis evidenció problemas de vivienda, salud y un enorme deterioro en las condiciones de vida de amplios sectores de la población.<br><br>Tomado de: Botey, A. M. (2005).",
+                question: "De acuerdo con el texto anterior, el impacto de la crisis económica de 1929 en Costa Rica",
+                options: {
+                    A: "mostró los problemas sociales del país, y potenció el descontento a través de una serie de manifestaciones en la década de los treinta.",
+                    B: "expandió la producción del sector de exportación y fortaleció económicamente otros sectores de la población.",
+                    C: "permitió bajar los porcentajes de desempleo y aumentar el estatus social de la mayoría de la población."
+                },
+                answer: "A"
+            },
+            {
+                id: 6,
+                text: "Lea el siguiente texto:",
+                quote: "Después de 1945, las potencias victoriosas, redefinieron las fronteras europeas. Alemania y Austria fueron ocupadas y perdieron su soberanía, la Unión Soviética se extendió hacia el oeste, los Países Bálticos desaparecieron, Polonia se desplazó hacia el oeste. Estos cambios provocaron el desplazamiento de la población con la finalidad de hacer frente al problema de las minorías nacionales.",
+                question: "A partir del texto anterior, uno de los cambios espaciales y geopolíticos del mundo después de la Segunda Guerra Mundial consistió en la",
+                options: {
+                    A: "desaparición de las alianzas políticas entre los países vencedores durante el conflicto bélico.",
+                    B: "expansión del espacio geográfico soviético hacia el centro de Europa a cambio de la concesión de sus colonias.",
+                    C: "configuración del mapa europeo con el establecimiento de nuevos límites territoriales, lo cual obligó a las personas a movilizarse."
+                },
+                answer: "C"
+            },
+            {
+                id: 7,
+                text: "Lea el siguiente texto:",
+                quote: "Diversos grupos fueron perseguidos por motivos políticos, ideológicos y de comportamiento, incluidos los comunistas, socialistas o testigos de Jehová. Además, los nazis consideraron que los prisioneros de guerra soviéticos eran infrahumanos y formaban parte de la \"amenaza comunista\". Se estima que 3,3 millones de prisioneros de guerra soviéticos murieron entre 1941 y 1945, lo que constituye el segundo grupo más numeroso de víctimas del nazismo después de los judíos.<br><br>Tomado de: UNESCO.",
+                question: "Con respecto al texto anterior, se puede afirmar que los",
+                options: {
+                    A: "nazis asediaron contra diversas poblaciones en un acto de intolerancia étnica, religiosa, entre otras, y causaron la pérdida de vidas humanas.",
+                    B: "prisioneros rusos conformaron el primer grupo que más pérdidas humanas propició el holocausto.",
+                    C: "judíos fueron el segundo grupo con más víctimas por parte del nazismo."
+                },
+                answer: "A"
+            },
+            {
+                id: 8,
+                text: "Lea la siguiente información:",
+                quote: "«Al igual que los darwinistas sociales los nazis creían que los seres humanos se podían clasificar colectivamente en \"razas\" con características distintivas transmitidas genéticamente desde la aparición del ser humano. Pensaban que las características heredadas se relacionaban con la apariencia externa y los modos de pensar, las habilidades creativas y organizativas, la inteligencia, el gusto y la valoración de la cultura, la fortaleza física y la destreza militar.<br><br>Tomado de: Liwerant, J. B. (2016).",
+                question: "A partir de la información anterior, una de las implicaciones sociopolíticas de la persecución y el exterminio de grupos étnicos fue la",
+                options: {
+                    A: "promoción del pluriculturalismo con la aceptación de las idiosincrasias étnicas.",
+                    B: "segregación de diversos grupos minoritarios según sus características físicas y culturales.",
+                    C: "conformación de sociedades selectas de acuerdo con los vínculos comerciales con el régimen político nazi."
+                },
+                answer: "B"
+            },
+            {
+                id: 9,
+                text: "Lea el siguiente texto:",
+                quote: "Durante la década de 1970, la carrera armamentista entre Estados Unidos de América y la Unión de Repúblicas Socialistas Soviéticas alcanzó niveles sin precedentes. Ambos países destinaron enormes recursos a la producción y modernización de armas nucleares y convencionales, lo que conllevó a aumentar las tensiones globales y alimentar el temor a un conflicto directo entre las superpotencias.<br><br>Tomado de: Blakemore, R. (2024).",
+                question: "Del texto anterior, ¿cuál fue un factor que propició el desarrollo de la Guerra Fría en la segunda mitad del siglo XX?",
+                options: {
+                    A: "Las cumbres bilaterales entre líderes de EE. UU. y la URSS, las cuales fomentaron la cooperación en áreas estratégicas como la exploración espacial.",
+                    B: "El avance tecnológico en armas de destrucción masiva que incrementó el temor a un enfrentamiento directo entre los bloques capitalista y socialista.",
+                    C: "Las políticas de desarme unilateral de ambas superpotencias para reducir significativamente el número de armas nucleares."
+                },
+                answer: "B"
+            },
+            {
+                id: 10,
+                text: "Lea la siguiente información:",
+                quote: "«La Segunda Guerra Mundial dejó a Europa dividida y Estados Unidos de América y la Unión de Repúblicas Socialistas Soviéticas emergieron como las superpotencias más dominantes del planeta. Debido a sus sistemas de creencias opuestas, hubo desacuerdos sobre cómo debía ordenarse el mundo de la postguerra y cómo Europa debía ser dividida. Esto provocó una feroz rivalidad y congelamiento en las relaciones a medida que ambas potencias competían por la dominación».<br><br>Tomado de: Evans, G. (2018).",
+                question: "De acuerdo con la información anterior, ¿cuál de las siguientes opciones se refiere a un factor que propició la Guerra Fría en la segunda mitad del siglo XX?",
+                options: {
+                    A: "La rivalidad ideológica entre el gobierno estadounidense y el soviético lo que condujo al establecimiento de zonas de influencia.",
+                    B: "La cooperación multilateral a nivel militar entre norteamericanos, soviéticos y europeos por la consecución de la paz mundial.",
+                    C: "La reconstrucción económica de Europa con el apoyo conjunto de los países subdesarrollados."
+                },
+                answer: "A"
+            },
+            {
+                id: 11,
+                text: "Lea el siguiente texto:",
+                quote: "Durante la Guerra Fría (1947-1991), los Juegos Olímpicos se convirtieron en la arena de la lucha no solo deportiva sino política. Las victorias deportivas se utilizaban para mostrar la supremacía política, económica e ideológica de los países participantes. Los niveles de tensión política entre las dos superpotencias alcanzaron sus máximos en los boicots a los Juegos de Moscú 1980 y Los Ángeles 1984. La competitividad y la exigencia de victorias eran tan altas que los valores culturales, sociales y educativos de los Juegos Olímpicos llegaron a desvirtuarse.<br><br>Tomado de: Molkova, S. y Rodríguez, M. (2018).",
+                question: "Del texto anterior, se distingue un impacto de la Guerra Fría en el ámbito deportivo al",
+                options: {
+                    A: "maximizar la competitividad deportiva alejada del conflicto entre los Estados Unidos de América y la Unión de Repúblicas Socialistas Soviéticas.",
+                    B: "demostrar que el deporte era un mecanismo de competición que estaba exento de las rivalidades políticas, principalmente en el contexto de la Guerra Fría.",
+                    C: "reflejar tensiones políticas que afectaron la participación de las justas olímpicas al someterlas a estándares competitivos que diferían de su esencia deportiva."
+                },
+                answer: "C"
+            },
+            {
+                id: 12,
+                text: "Lea el siguiente texto:",
+                quote: "En 1955 tanto los Estados Unidos de América como la Unión de Repúblicas Socialistas Soviéticas declararon la intención de enviar satélites artificiales al espacio. Dos años más tarde, los soviéticos lograron alcanzar la órbita terrestre con el lanzamiento del Sputnik 1, con lo cual da inicio la carrera espacial.<br><br>Tomado de: Rodríguez, H. (2023).",
+                question: "De acuerdo con el texto anterior, ¿cuál fue el alcance de la rivalidad entre las potencias norteamericana y soviética durante la Guerra Fría?",
+                options: {
+                    A: "La disputa por el control estratégico del espacio exterior, así como por el avance de la ciencia.",
+                    B: "El cuestionamiento de los productores de armamento sobre la pertinencia de la paz y el equilibrio mundial.",
+                    C: "La desaprobación de los países del mundo sobre la innecesaria inversión de capitales en la exploración espacial."
+                },
+                answer: "A"
+            },
+            {
+                id: 13,
+                text: "Lea el siguiente texto:",
+                quote: "Las dos chinas: la República Popular China y la República de China están separadas geográficamente por un estrecho, tienen marcadas diferencias ideológicas y un conflicto histórico. Esta división se remonta a 1945, cuando Taiwán se independizó del Imperio del Japón, y en 1949, los nacionalistas derrotados por las tropas comunistas de Mao Tse-Tung se refugiaron en Taiwán, donde establecieron su propia república. A pesar de compartir tradiciones, cultura y el idioma chino mandarín, estas dos regiones han mantenido tensiones políticas significativas en el Lejano Oriente.<br><br>Tomado de: Padinger, G. (2024).",
+                question: "De acuerdo con el texto anterior, el conflicto actual se caracteriza por",
+                options: {
+                    A: "mostrar enfoques políticos en común entre China y Taiwán, que han permitido alejarse de las disputas internas al respetar su autodeterminación.",
+                    B: "décadas de hostilidad, ya que la República Popular de China reclamaba ser gobernante legítimo en todos los territorios de China, incluida Taiwán.",
+                    C: "haber logrado negociaciones entre China y Taiwán a pesar de las diferencias lingüísticas y culturales mediante acuerdos políticos beneficiosos para ambos."
+                },
+                answer: "B"
+            },
+            {
+                id: 14,
+                text: "Lea el siguiente texto:",
+                quote: "«La dictadura más larga en América del Sur fue la de Alfredo Stroessner, quien gobernó Paraguay entre 1954 y 1989 [...]. Stroessner puso en marcha un amplio aparato represivo para controlar a la disidencia política. Para empezar, limitó la libertad de prensa. A lo largo de la dictadura fue estrechando el cerco sobre los medios de comunicación hasta que cerró el principal diario, ABC Color (1984) y el semanario de la oposición, El Pueblo (1987). Muchos opositores fueron detenidos, torturados, exiliados o desaparecidos».<br><br>Tomado de: Romero, M. (2019).",
+                question: "Según el texto anterior y en el contexto de la Guerra Fría, ¿cuál fue una de las razones que motivó a diversos grupos sociopolíticos a luchar contra las dictaduras en Latinoamérica?",
+                options: {
+                    A: "La colaboración de los ejércitos nacionales a las guerrillas internas.",
+                    B: "La cooperación financiera internacional a los sistemas políticos democráticos.",
+                    C: "La suspensión de los derechos civiles y políticos de la ciudadanía en general."
+                },
+                answer: "C"
+            },
+            {
+                id: 15,
+                text: "Lea el siguiente texto:",
+                quote: "Durante una clase de economía, el profesor comenta que en su experiencia viajando por diferentes países durante la Guerra Fría, notó que los productos fabricados en la Unión de Repúblicas Socialistas Soviéticas eran raramente encontrados en tiendas fuera de los países socialistas. A diferencia de los productos de países capitalistas, como los automóviles norteamericanos o las computadoras japonesas, los productos soviéticos no estaban tan disponibles en el mercado internacional. Esto llevó a una discusión sobre cómo el socialismo real impactó la visibilidad de sus productos en comparación con el capitalismo.",
+                question: "A partir del texto anterior, se puede inferir que el socialismo real tuvo una característica que lo diferenciaba del capitalismo en cuanto a su presencia global, ya que",
+                options: {
+                    A: "sus productos lograron una alta visibilidad y aceptación en mercados internacionales a través de la exportación masiva.",
+                    B: "la producción y distribución se enfocaron mayormente en el mercado local, lo que limitó el reconocimiento mundial de sus productos.",
+                    C: "sus bienes y servicios fueron ampliamente reconocidos y competitivos en el mercado global, con lo cual superaron a las marcas capitalistas."
+                },
+                answer: "B"
+            },
+            {
+                id: 16,
+                text: "Lea la siguiente información:",
+                quote: "Durante la época soviética, el programa estatal \"putevki\" obligaba a los ciudadanos a tomar vacaciones al menos dos semanas en los balnearios estatales. Viajaban en tren, tenían su propia habitación y seguían tratamientos médicos estrictamente programados. Las reglas eran estrictas, no se permitían familiares, ni actividades como beber, bailar o hacer ruido, para asegurar la reflexión sobre el Estado socialista.<br><br>Tomado de: Zachos, E. (2018).",
+                question: "De acuerdo con la información anterior, ¿cuál opción refiere una repercusión del sistema socialista en la vida de las personas?",
+                options: {
+                    A: "La promoción de actividades de ocio para el bienestar de las familias y la cohesión de la población a nivel político.",
+                    B: "La imposición del descanso activo para la reflexión política, lo cual refleja el control de la vida cotidiana de los trabajadores.",
+                    C: "La preservación de las libertades individuales y civiles, tal es el caso de la gestión del tiempo de recreo según los intereses personales."
+                },
+                answer: "B"
+            },
+            {
+                id: 17,
+                text: "Lea el siguiente texto:",
+                quote: "A finales de la década de 1980, el descontento con el sistema socialista en la Unión de Repúblicas Socialistas Soviéticas creció a medida que se hicieron evidentes las deficiencias económicas y la falta de reformas. La brecha creciente entre las promesas del sistema y la realidad cotidiana llevó a un aumento en las demandas de cambios políticos y económicos.<br><br>Tomado de: García, J. (2020).",
+                question: "De acuerdo con el texto anterior, un factor que contribuyó a la caída del socialismo real fue",
+                options: {
+                    A: "la creciente diferencia entre las expectativas creadas por el sistema socialista y la realidad económica deficiente.",
+                    B: "el aumento en la oferta de bienes de consumo que mejoró la calidad de vida de los ciudadanos.",
+                    C: "la estabilidad económica y la satisfacción general de la población con el sistema socialista."
+                },
+                answer: "A"
+            },
+            {
+                id: 18,
+                text: "Lea el siguiente texto:",
+                quote: "La presencia de Rusia en América Latina se centra en un eje político-militar, con la colaboración de Cuba, Nicaragua y Venezuela, que han permitido bases militares rusas en sus territorios. Otros países mantienen una postura ambigua de \"neutralidad\" con un sesgo pro ruso. Por ejemplo, en la celebración de la Independencia en Ciudad de México en septiembre de 2023, participaron 15 militares rusos. Esta actitud conciliatoria explica por qué ningún país latinoamericano fue incluido en la lista de naciones \"no amigas\" publicada por Rusia en marzo de 2022.<br><br>Tomado de: Malamud, C. y Núñez, R. (2023).",
+                question: "De acuerdo con el texto anterior, ¿cuál de las siguientes opciones se refiere al papel de Rusia en América Latina en la actualidad?",
+                options: {
+                    A: "La declaración de neutralidad de los países de la región evita la intromisión de cualquier potencia en Latinoamérica.",
+                    B: "El despliegue militar ruso en la región es parte de las actividades de rutina y cuenta con el aval de todos los gobiernos.",
+                    C: "La influencia política y militar que Rusia ejerce en algunos países de la región desestabiliza las relaciones internacionales del área."
+                },
+                answer: "C"
+            },
+            {
+                id: 19,
+                text: "Lea el siguiente texto:",
+                quote: "El narcotráfico ha tenido efectos profundos en América Latina y ha afectado tanto la estructura social como la económica de los países. La violencia relacionada con los carteles de drogas ha aumentado la inseguridad en muchas comunidades y ha llevado a un incremento en los gastos públicos para seguridad y justicia. Además, las economías locales sufren debido a la disminución de la inversión y el turismo en áreas que se vuelven peligrosas.<br><br>Tomado de: Garat, G. (2021).",
+                question: "De acuerdo con el texto anterior, una implicación del narcotráfico en América Latina se evidencia en",
+                options: {
+                    A: "la intensificación de la violencia social y el deterioro del entorno económico local.",
+                    B: "el crecimiento de la inversión extranjera en las áreas afectadas por el narcotráfico.",
+                    C: "el auge económico de las economías locales afectadas por el narcotráfico."
+                },
+                answer: "A"
+            },
+            {
+                id: 20,
+                text: "Lea la siguiente información:",
+                quote: "En un período de doce años, la población global aumentó de 7000 a 8000 millones de personas. Se proyecta que llegará a 9000 millones en 2037, lo que sugiere un descenso en el ritmo de crecimiento poblacional. No obstante, la tasa de fertilidad permanece elevada en ciertos países, en particular en aquellos con menores ingresos económicos, tal es el caso de las naciones que pertenecen a la región de África subsahariana.<br><br>Tomado de: Organización de Naciones Unidas.",
+                question: "De acuerdo con la información anterior, el crecimiento de la población mundial se ha concentrado principalmente en los",
+                options: {
+                    A: "estados ubicados al norte del planeta, que poseen mayores índices de ingresos por persona.",
+                    B: "países con tasas de defunción estable y que permiten el aumento demográfico.",
+                    C: "países con menor desarrollo socioeconómico y con altas tasas de fecundidad."
+                },
+                answer: "C"
+            },
+            {
+                id: 21,
+                text: "Lea el siguiente texto:",
+                quote: "En los países desarrollados, los programas de bienestar social y políticas de apoyo familiar han llevado a una estabilidad en las tasas de natalidad y un envejecimiento de la población. Esto se contrasta con los países en vías de desarrollo, donde la falta de acceso a servicios de salud y educación contribuye a tasas de natalidad más altas y a contar con una población más joven. Las diferencias en las políticas de salud pública y el acceso a la educación entre estos grupos de países han creado una brecha significativa en las estructuras poblacionales.<br><br>Tomado de: Fondo de Población de las Naciones Unidas.",
+                question: "De acuerdo con el texto anterior, las variaciones en la estructura poblacional entre países desarrollados y en vías de desarrollo se debe a que, en estos últimos,",
+                options: {
+                    A: "la insuficiencia de servicios provoca alta natalidad, en contraste con las bajas tasas de natalidad de los países desarrollados.",
+                    B: "la migración interna reduce el crecimiento urbano, mientras los países ricos muestran estabilidad demográfica.",
+                    C: "las políticas de salud conducen al envejecimiento poblacional, a diferencia de la alta natalidad del primer mundo."
+                },
+                answer: "A"
+            },
+            {
+                id: 22,
+                text: "Lea la siguiente información:",
+                quote: "«La emigración continúa en el siglo XXI, provocada por la hambruna, los desastres naturales y las violaciones de los derechos humanos. A partir de 2013, cada vez más emigrantes del norte de África y Oriente Medio empezaron a desplazarse a Europa y huir de la pobreza y la inestabilidad política de sus hogares, tal es el caso de cientos de miles de rohinyás que han sido obligados a emigrar a Bangladesh desde Birmania pese a los siglos de historia en su patria. La crisis migratoria ha puesto presión en los recursos europeos y provocado xenofobia y frustración, incluso en estados acogedores».<br><br>Tomado de: Blakemore, E. (2019).",
+                question: "De acuerdo con la información anterior, ¿cuál de las siguientes opciones describe las circunstancias que obligan a las personas a emigrar?",
+                options: {
+                    A: "La presión social y económica para aquellos estados que reciben a la población migrante.",
+                    B: "La búsqueda de oportunidades laborales en el ámbito político es el principal motivo de la migración.",
+                    C: "Las migraciones son un fenómeno multicausal que abarca aspectos económicos, derechos civiles y violencia política."
+                },
+                answer: "C"
+            },
+            {
+                id: 23,
+                text: "Lea el siguiente texto:",
+                quote: "La aviación es esencial para la economía de América Latina y el Caribe, al contribuir con más de 167 mil millones de dólares al PIB en 2014 y generar 5,2 millones de empleos. Facilita el turismo, el comercio, la inclusión social, el intercambio de ideas y la competitividad económica. Además, mejora la productividad y fomenta la innovación, por lo que es clave en la interconexión regional con la economía global a través del avance tecnológico y el comercio turístico.<br><br>Tomado de: CEPAL. (2017).",
+                question: "De acuerdo con el texto anterior, la importancia del transporte aéreo en las economías de América Latina y el Caribe está intrínsicamente relacionada con el fenómeno de la",
+                options: {
+                    A: "globalización.",
+                    B: "mercantilización.",
+                    C: "antiglobalización."
+                },
+                answer: "A"
+            },
+            {
+                id: 24,
+                text: "Lea el siguiente texto:",
+                quote: "«Esta nueva fase del desarrollo capitalista se caracterizó fundamentalmente por la globalización del proceso de circulación del capital mediante la fragmentación geográfica de los distintos eslabones que componen las cadenas de producción, circulación y financiación involucradas en este proceso, bajo el control de las empresas transnacionales (ETN), que han pasado a conformar una clase burguesa transnacional, integrada tanto por ETN del Norte como ETN del Sur».<br><br>Tomado de: Martínez, J. (2011).",
+                question: "De acuerdo con el texto anterior, ¿cuál de las siguientes opciones describe el funcionamiento de las empresas transnacionales y el uso de mano de obra en terceros países?",
+                options: {
+                    A: "La exclusión de las economías subdesarrolladas de las cadenas de producción globales.",
+                    B: "La centralización de todas las operaciones administrativas y productivas en el país de origen de las ETN.",
+                    C: "La dispersión de los procesos de producción, así como su financiamiento en diversas regiones del mundo."
+                },
+                answer: "C"
+            },
+            {
+                id: 25,
+                text: "Lea el siguiente texto:",
+                quote: "Las críticas a la globalización destacan que, en lugar de promover una equidad global, perpetúa un sistema de dominación económica que beneficia a las naciones más poderosas a expensas de las más débiles. Esta crítica se refleja en movimientos y protestas en diversas ciudades alrededor del mundo, que cuestionan el impacto negativo de instituciones financieras internacionales sobre los recursos naturales y las condiciones de vida en los países en desarrollo.<br><br>Tomado de: Ulgen, S. (2022).",
+                question: "Según el texto anterior, las críticas a la globalización entre países y regiones del mundo sugieren que esta",
+                options: {
+                    A: "sigue manteniendo una estructura de poder desigual y favorece a las naciones más desarrolladas.",
+                    B: "propicia la transformación económica que evita el surgimiento de movimientos de protesta.",
+                    C: "aumenta la equidad económica global y reduce las desigualdades entre países."
+                },
+                answer: "A"
+            },
+            {
+                id: 26,
+                text: "Lea el siguiente texto:",
+                quote: "La globalización influye directamente en el cambio social actual, al convertir lo extranjero en un factor clave para definir, confirmar o afirmar las identidades. Además, es una construcción social que se reconoce al interior de cada sociedad, en aspectos tales como el género, los grupos étnicos, el lugar en donde se nace o se vive, el aspecto generacional, la edad, las diferencias socioeconómicas, las tendencias políticas [...]; por lo que la diversidad se convierte en una característica que cohesiona el fenómeno de las identidades en tiempos de globalización.<br><br>Tomado de: Arias, L. (2009).",
+                question: "De acuerdo con el texto anterior, la preservación de las prácticas y los legados culturales en un mundo globalizado es importante porque",
+                options: {
+                    A: "mantiene la diversidad y propicia la homogeneización global.",
+                    B: "fomenta el entendimiento intercultural y promueve la paz a nivel global.",
+                    C: "asegura la continuidad de las prácticas ancestrales y fortalece la identidad."
+                },
+                answer: "C"
+            },
+            {
+                id: 27,
+                text: "Lea el siguiente texto:",
+                quote: "Durante la primera mitad del siglo XX, Costa Rica enfrentó crisis económicas severas que impactaron tanto a los trabajadores como al Estado. Las causas internas incluyeron una elevada deuda interna y políticas económicas inadecuadas que llevaron a un estancamiento prolongado. Externamente, la volatilidad en los precios internacionales de productos clave como el café y el banano exacerbó las dificultades y afectó negativamente la balanza comercial del país.<br><br>Tomado de: León, J. (2012).",
+                question: "A partir del texto anterior, una repercusión de las crisis económicas en Costa Rica en la primera mitad del siglo XX se evidenció en que",
+                options: {
+                    A: "la fluctuación de precios de las materias primas desestabilizó la economía interna, al afectar la balanza comercial y ampliar la deuda externa.",
+                    B: "la independencia de la agricultura tradicional incrementó el éxito económico que afectó la economía por un largo período.",
+                    C: "los recortes en el gasto público por austeridad aumentaron el desempleo y redujeron la inversión en infraestructura."
+                },
+                answer: "A"
+            },
+            {
+                id: 28,
+                text: "Lea el siguiente texto:",
+                quote: "El mundo globalizado se ha visto comprometido económica y socialmente después de la crisis de 2008, tal y como sucedió con la crisis económica de 1929, la cual inició la Gran Depresión de los años 30 del siglo pasado. En ambas crisis coincide el descontrolado crecimiento del comercio de mercancías, lo cual provoca un exceso de producción que desencadena, por un lado, un descenso de la solidez de las empresas de diferentes países y, por otro lado, el aumento de los recortes salariales y despidos que repercuten en un endeudamiento de la economía doméstica de las naciones.<br><br>Tomado de: Aranda, J. (2020).",
+                question: "De acuerdo con el texto anterior, una similitud entre la Gran Depresión (1929) y la crisis del 2008 consiste en que ambas crisis se originaron por",
+                options: {
+                    A: "el aumento de productos en el mercado y la disminución del consumo.",
+                    B: "el estancamiento del comercio mundial y el aumento del desempleo.",
+                    C: "la aparición de más entidades bancarias y empresas comerciales."
+                },
+                answer: "A"
+            },
+            {
+                id: 29,
+                text: "Lea el siguiente texto:",
+                quote: "Los sectores más afectados por el desempleo durante la crisis de 1929 en Costa Rica incluyeron a los trabajadores del campo sin parcela propia, los empleados en talleres y manufacturas urbanas, y los obreros en obras públicas. Los pequeños campesinos que lograron cultivar para su subsistencia tuvieron menos dificultades, mientras que los trabajadores bananeros enfrentaron despidos, reducciones salariales y un aumento general en el costo de vida.<br><br>Tomado de: Acuña, M. A. (2015).",
+                question: "De acuerdo con el texto anterior, los movimientos sociales en Costa Rica durante la crisis de 1929 surgieron",
+                options: {
+                    A: "debido al deterioro de las condiciones laborales y sociales.",
+                    B: "exclusivamente para mejorar las condiciones de los trabajadores bananeros.",
+                    C: "debido al impacto positivo de las finanzas del Estado tanto internas como externamente."
+                },
+                answer: "A"
+            },
+            {
+                id: 30,
+                text: "Lea el siguiente texto:",
+                quote: "La reforma electoral de 1913, que introdujo el voto directo, transformó la competencia electoral en Costa Rica. Aunque las jerarquías locales mantuvieron su poder a nivel local, perdieron influencia en la política nacional. La elección del presidente y los diputados pasó a depender de la capacidad de los partidos políticos para atraer y movilizar a miles de votantes, en lugar de las conspiraciones de unos pocos electores. Esta reforma potenció a los partidos y a los votantes al establecer una conexión directa entre las demandas populares, los compromisos partidarios y las políticas públicas.<br><br>Tomado de: Molina, I. (2001).",
+                question: "Según el texto anterior, ¿cuál opción refiere una característica del sistema electoral de Costa Rica en la primera mitad del siglo XX?",
+                options: {
+                    A: "La influencia y el manejo de las jerarquías locales sobre los partidos políticos nacionales.",
+                    B: "El fortalecimiento de los poderes locales, lo cual aseguró su injerencia en la política nacional.",
+                    C: "El vínculo cercano entre el electorado y las agendas de trabajo de los partidos políticos nacionales."
+                },
+                answer: "C"
+            },
+            {
+                id: 31,
+                text: "Lea el siguiente texto:",
+                quote: "Durante la primera mitad del siglo XX, Costa Rica experimentó varias reformas institucionales con la promulgación de la Constitución de 1949. Entre las reformas destacadas están el establecimiento del Tribunal Supremo de Elecciones, que supervisa las elecciones nacionales, y la Contraloría General de la República, que supervisa el manejo de los recursos públicos.<br><br>Tomado de: Vargas, L. (2019).",
+                question: "Con respecto al texto anterior, la Constitución de 1949 en la consolidación de la democracia en Costa Rica propició la",
+                options: {
+                    A: "creación de instituciones que velan por la transparencia de los comicios y de un uso adecuado de los fondos estatales.",
+                    B: "fundación de una estructura política estatal a cargo de la fiscalización de los fondos privados.",
+                    C: "promulgación de instituciones que buscan debilitar el control fiscal y electoral del país."
+                },
+                answer: "A"
+            },
+            {
+                id: 32,
+                text: "Lea el siguiente texto:",
+                quote: "El punto siete del Acuerdo de Ochomogo dice lo siguiente: \"Se guardará absoluto y efectivo respeto al sistema democrático republicano asegurando y respetando las libertades de pensamiento, de conciencia, de palabra, de reunión y de organización de todos los partidos políticos que existan o puedan establecerse en el país\"». No obstante, la Junta Fundadora de la Segunda República promulgó la Ley 105 que inhabilitó el Partido Vanguardia Popular y a la Confederación de Trabajadores de Costa Rica.<br><br>Tomado de: Barahona, M. (2023).",
+                question: "A partir del texto anterior, ¿cuál opción se refiere a un efecto de la Guerra Civil de 1948 en la vida cotidiana de la población costarricense?",
+                options: {
+                    A: "La reafirmación de los derechos civiles y políticos para todos los grupos sociales.",
+                    B: "La restricción de ciertas libertades políticas, a pesar de los compromisos adquiridos.",
+                    C: "La eliminación de los mecanismos fraudulentos utilizados por diversos grupos para acceder al poder."
+                },
+                answer: "B"
+            },
+            {
+                id: 33,
+                text: "Lea los siguientes enunciados:",
+                quote: "Modelo agroexportador: Exportación de productos agrícolas (café, banano) con alta dependencia del mercado internacional y precios fluctuantes.<br><br>Modelo de sustitución de importaciones: Fomento de la industria local para reemplazar importaciones y fortalecer el mercado interno mediante proteccionismo.<br><br>Tomado de: Lizano, E. (2016).",
+                question: "Con respecto los enunciados anteriores, una causa que propició el cambio del modelo económico agroexportador de Costa Rica al de sustitución de importaciones fue que este",
+                options: {
+                    A: "se enfocaba en productos agrícolas específicos, mientras que el modelo de sustitución priorizaba el desarrollo de la industria internacional.",
+                    B: "dependía del comercio internacional, mientras que el modelo de sustitución buscaba desarrollar la economía local.",
+                    C: "no satisfacía el mercado interno, a diferencia del modelo de sustitución que promovía la autosuficiencia."
+                },
+                answer: "C"
+            },
+            {
+                id: 34,
+                text: "Lea el siguiente texto:",
+                quote: "El Plan Gran Área Metropolitana (GAM) de 1982 intentó regular las ciudades con un modelo que considera la escala regional y un sistema nacional de ciudades. La concentración, no planificada, de servicios y de población en la GAM ha generado igualmente la concentración de problemas ambientales urbanos como mal manejo de los desechos sólidos y líquidos, la degradación del aire, empresas e industrias insalubres, altos niveles de ruido, contaminación de acuíferos, construcción e impermeabilización de zonas de recarga.<br><br>Tomado de: Brenes, E. y Rodríguez, F. (2008).",
+                question: "Según el texto anterior, ¿cuál opción se refiere a problemas urbanos en Costa Rica después de 1950?",
+                options: {
+                    A: "El aumento de la contaminación aérea y terrestre, dada la concentración demográfica.",
+                    B: "El perfeccionamiento de los tanques sépticos para sanear los mantos acuíferos.",
+                    C: "El mejoramiento de la gestión de residuos sólidos y líquidos a nivel local."
+                },
+                answer: "A"
+            },
+            {
+                id: 35,
+                text: "Lea el siguiente texto:",
+                quote: "En la década de 1970, la apresurada apertura de la Central Azucarera del Tempisque (CATSA), financiada con abundantes recursos antes de la devaluación del colón, dejó a los trabajadores desprotegidos. Las deficiencias internas y las duras condiciones laborables generaron descontento, lo cual llevó a una huelga en 1979 por mejores salarios y condiciones. La respuesta agresiva de la empresa y la ilegalidad del sindicato afectaron negativamente al movimiento, por lo que fue criticada en la prensa.<br><br>Tomado de: Marchena, J. (2019).",
+                question: "De acuerdo con el texto anterior, la huelga contra la Central Azucarera del Tempisque fue originada por",
+                options: {
+                    A: "la negativa del sindicato de trabajadores de llegar a un acuerdo con la compañía.",
+                    B: "las luchas de reivindicación social por parte de los trabajadores en la búsqueda de mejores condiciones laborales.",
+                    C: "el apego de las leyes laborales por parte de la compañía ante un sindicato legitimado que fortalecía el movimiento huelguístico."
+                },
+                answer: "B"
+            }
+        ];
+
+        let currentUser = null;
+        let currentAttempt = 1;
+
+        // Inicialización y renderizado de la interfaz del examen
+        function initExam() {
+            const container = document.getElementById('questions-container');
+            const matrixGrid = document.getElementById('matrix-grid');
+            container.innerHTML = '';
+            matrixGrid.innerHTML = '';
+
+            EXAM_QUESTIONS.forEach((q, index) => {
+                // Generar tarjeta de pregunta
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${q.id}`;
+
+                let html = `<div class="question-text">${q.id}) ${q.text}</div>`;
+                if (q.quote) {
+                    html += `<div class="quote-box">${q.quote}</div>`;
+                }
+                html += `<div class="question-text" style="font-size: 1rem; margin-top: 10px;">${q.question}</div>`;
+                html += `<ul class="options-list">`;
+
+                for (const [key, value] of Object.entries(q.options)) {
+                    html += `
+                        <li class="option-item">
+                            <label class="option-label" id="label-${q.id}-${key}">
+                                <input type="radio" name="q_${q.id}" value="${key}" onchange="markAnswered(${q.id})">
+                                <div><strong>${key})</strong> ${value}</div>
+                            </label>
+                        </li>
+                    `;
+                }
+                html += `</ul>`;
+                card.innerHTML = html;
+                container.appendChild(card);
+
+                // Generar botón en la matriz de navegación
+                const mBtn = document.createElement('ahref');
+                const mButton = document.createElement('button');
+                mButton.type = 'button';
+                mButton.className = 'matrix-btn';
+                mButton.id = `matrix-btn-${q.id}`;
+                mButton.innerText = q.id;
+                mButton.onclick = () => {
+                    document.getElementById(`q-card-${q.id}`).scrollIntoView({ behavior: 'smooth' });
+                    toggleMatrix();
+                };
+                matrixGrid.appendChild(mButton);
+            });
+
+            startTimer();
+        }
+
+        function markAnswered(qId) {
+            const btn = document.getElementById(`matrix-btn-${qId}`);
+            if (btn) btn.classList.add('answered');
+        }
+
+        function toggleMatrix() {
+            const modal = document.getElementById('matrix-modal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Cronómetro de 2 horas
+        function startTimer() {
+            let duration = 7200; // 2 horas en segundos
+            const timerDisplay = document.getElementById('timer');
+            const interval = setInterval(() => {
+                let hours = Math.floor(duration / 3600);
+                let minutes = Math.floor((duration % 3600) / 60);
+                let seconds = duration % 60;
+
+                timerDisplay.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (--duration < 0) {
+                    clearInterval(interval);
+                    alert("El tiempo reglamentario ha finalizado. La prueba se enviará automáticamente.");
+                    document.getElementById('btn-submit').click();
+                }
+            }, 1000);
+        }
+
+        // Manejo del Login y Control de Intentos
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const pass = document.getElementById('password').value.trim();
+            const errorDiv = document.getElementById('login-error');
+
+            const foundUser = USERS_DB.find(u => u.email === email && u.pass === pass);
+
+            if (!foundUser) {
+                errorDiv.textContent = "Credenciales incorrectas o usuario no autorizado.";
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            // Control de Intentos en localStorage
+            let attemptsData = JSON.parse(localStorage.getItem(`attempts_${email}`) || '0');
+            if (attemptsData >= 2) {
+                errorDiv.textContent = "Acceso bloqueado: Ha agotado el límite máximo de 2 intentos permitidos.";
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            currentAttempt = attemptsData + 1;
+            currentUser = foundUser;
+
+            sessionStorage.setItem('currentUser', JSON.stringify({ email: currentUser.email, name: currentUser.name, attempt: currentAttempt }));
+
+            // Transición de pantallas
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app-screen').style.display = 'block';
+
+            document.getElementById('lbl-nombre').textContent = currentUser.name;
+            document.getElementById('lbl-correo').textContent = currentUser.email;
+            document.getElementById('lbl-intento').textContent = `Intento ${currentAttempt} de 2`;
+
+            initExam();
+        });
+
+        // Envío y Calificación Automática
+        document.getElementById('btn-submit').addEventListener('click', function() {
+            let unanswered = 0;
+            EXAM_QUESTIONS.forEach(q => {
+                const radios = document.getElementsByName(`q_${q.id}`);
+                let answered = false;
+                for (let r of radios) {
+                    if (r.checked) answered = true;
+                }
+                if (!answered) unanswered++;
+            });
+
+            if (unanswered > 0) {
+                alert(`Tiene ${unanswered} pregunta(s) sin responder. Debe responder la totalidad de los ítems antes de entregar.`);
+                return;
+            }
+
+            if (!confirm("¿Está seguro(a) de finalizar y entregar la prueba? Una vez entregada no podrá modificar sus respuestas.")) {
+                return;
+            }
+
+            processResults();
+        });
+
+        function processResults() {
+            let score = 0;
+            const userResponses = {};
+
+            EXAM_QUESTIONS.forEach(q => {
+                const radios = document.getElementsByName(`q_${q.id}`);
+                let selected = null;
+                for (let r of radios) {
+                    if (r.checked) selected = r.value;
+                }
+                userResponses[q.id] = selected;
+
+                const card = document.getElementById(`q-card-${q.id}`);
+                const correctOption = q.answer;
+
+                // Retroalimentación Visual Inmediata
+                if (selected === correctOption) {
+                    score++;
+                    card.classList.add('feedback-correct');
+                } else {
+                    card.classList.add('feedback-incorrect');
+                }
+
+                // Marcar respuestas correctas visualmente
+                const correctLabel = document.getElementById(`label-${q.id}-${correctOption}`);
+                if (correctLabel) {
+                    correctLabel.style.border = "2px solid var(--success)";
+                    correctLabel.style.backgroundColor = "#e6fffa";
+                }
+            });
+
+            // Cálculos oficiales
+            const totalItems = EXAM_QUESTIONS.length; // 35
+            const finalGrade100 = ((score / totalItems) * 100).toFixed(2);
+            const percentageObtained = ((score / totalItems) * 70).toFixed(2); // Valor porcentual 70%
+
+            // Actualizar persistencia de intentos
+            localStorage.setItem(`attempts_${currentUser.email}`, currentAttempt);
+
+            // Bloquear formulario
+            const allInputs = document.querySelectorAll('input[type="radio"]');
+            allInputs.forEach(input => input.disabled = true);
+            document.getElementById('btn-submit').style.display = 'none';
+
+            // Mostrar Banner de Resultados
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = `
+                <div class="result-banner">
+                    <h2>¡Prueba Finalizada y Calificada con Éxito!</h2>
+                    <p>Se ha registrado oficialmente su intento N° ${currentAttempt} de 2.</p>
+                    <div class="results-grid">
+                        <div class="result-card-item">Puntos Obtenidos<span>${score} / ${totalItems}</span></div>
+                        <div class="result-card-item">Nota Base 100<span>${finalGrade100}</span></div>
+                        <div class="result-card-item">Porcentaje (70%)<span>${percentageObtained}%</span></div>
+                    </div>
+                    <button class="btn no-print" onclick="window.print()" style="max-width: 250px; margin-top: 15px;">Imprimir / Guardar Comprobante PDF</button>
+                </div>
+            `;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Enviar datos al Backend (Google Apps Script)
+            const payload = {
+                email: currentUser.email,
+                name: currentUser.name,
+                attempt: currentAttempt,
+                score: score,
+                totalItems: totalItems,
+                finalGrade100: finalGrade100,
+                percentageObtained: percentageObtained,
+                responses: userResponses
+            };
+
+            fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                console.log("Comprobante enviado al servidor de Google Apps Script correctamente.");
+            }).catch(err => {
+                console.error("Error al enviar el reporte:", err);
+            });
+        }
+    </script>
+</body>
+</html>
